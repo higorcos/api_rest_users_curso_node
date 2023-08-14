@@ -5,7 +5,7 @@ var knex = require('knex')({
         port : 3306,
         user: 'root',
         password: 'mydb2023',
-        database:'knexjs'
+        database:'apiUsers'
     }
   });
 
