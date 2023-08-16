@@ -2,6 +2,7 @@ const knex = require('../database/connection');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 class User{
 
     async new(user){
@@ -60,6 +61,23 @@ class User{
         }
     }
 
+    async findByEmail(email){
+        try{
+            const resultSelect = await knex.select(['idUser','name','password','email','role']).where({email}).table('users');
+            
+            if(resultSelect.length > 0){
+                return {err: false, return: resultSelect[0]};
+
+            }else{
+                return {err: true, return: []};
+            }
+
+        }catch(err){
+            console.log(err);
+            return {err: true, return: err};
+        }
+    }
+
     async update(user){
         
             //verificar se usuário existe 
@@ -114,6 +132,24 @@ class User{
         }catch(err){
             //console.log(err);
             return {err: true, return: err};
+        }
+    }
+
+    async changePassword(newPassword, idUser){
+        const hash = await bcrypt.hash(newPassword,saltRounds); //Criptografia
+
+        try{
+            await knex.update({
+                    password: hash
+                }).where({
+                    idUser
+                }).table('users');
+
+            return {err: false, return: []};
+            
+        }catch(err){
+            return {err: true, return: err};
+
         }
     }
 }
