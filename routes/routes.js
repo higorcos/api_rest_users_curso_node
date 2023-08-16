@@ -15,6 +15,9 @@ router.delete('/user/:id', UserController.delete);
 
 router.post('/recovery-password', UserController.recoveryPassword);
 router.put('/recovery-password/:token', UserController.changePassword);
+router.get('/recovery-password/:token', (req,res)=>{
+return res.send("Redirect para rota de formulário para nova senha");
+});
 
 
 router.get('/', HomeController.index);

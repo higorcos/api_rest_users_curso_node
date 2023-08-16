@@ -7,7 +7,7 @@ class TokenUsers{
     async create(email){
         
         const resultUser = await UsersModel.findByEmail(email)
-        console.log(resultUser)
+        // console.log(resultUser)
         if(!resultUser.err){
            
             await this.deleteTokenExpiration(resultUser.return.idUser)

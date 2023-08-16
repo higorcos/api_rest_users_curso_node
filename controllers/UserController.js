@@ -1,7 +1,10 @@
 const UsersModel = require('../models/User');
 const TokenModel = require('../models/PasswordToken');
+const servicesEmail = require('../utils/servicesEmail');
+
+require('dotenv').config()
+const secret = process.env.SECRET_JWT;
 const JWT = require('jsonwebtoken');
-const secret = '!@#_word)(*AbcKj';
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -206,6 +209,8 @@ class UserController{
 
                     Vou mandar o token direto (Perigoso mandar o token Solto dessa forma)
                 */
+                   
+                    servicesEmail.submit(email,resultToken.return)
                 return res.status(200).json({
                     error: false,
                     msg:'Token para recuperação criado com sucesso',
